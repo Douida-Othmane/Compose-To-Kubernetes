@@ -42,9 +42,9 @@ class TemplateSpec {
 class Container {
 	attr String[1] name;
 	attr String[1] image;
-	val DeploymentPort[*] ports;
-	val Env[*] env;
-	val VolumeMount[*] volumeMounts;
+	val DeploymentPort[1] ports;
+	val Env[1] env;
+	val VolumeMount[1] volumeMounts;
 }
 
 class DeploymentPort {
@@ -59,11 +59,11 @@ class Env {
 class VolumeMount {
 	attr String[1] name;
 	attr String[1] mountPath;
-	attr String[1] subPath;
 }
 
 class Service {
 	attr String[1] apiVersion;
+	val Metadata[1] metadata;
 	val ServiceSelector[1] serviceSelector;
 	val ServicePort[*] servicePorts;
 }

@@ -13,10 +13,10 @@ class Service {
 	attr String[1] name;
 	attr String[1] image;
 	attr String[1] command;
-	val Service[*] depends_on;
-	val Port[*] ports;
-	val Volume[*] volumes;
-	val Environment[*] environmentVariables;
+	val Service[1] depends_on;
+	val Port[1] ports;
+	val Volume[1] volumes;
+	val Environment[1] environmentVariables;
 }
 
 class Port {
@@ -25,7 +25,7 @@ class Port {
 }
 
 class Volume {
-	attr String[1] host;
+	attr String[1] name;
 	attr String[1] container;
 }
 

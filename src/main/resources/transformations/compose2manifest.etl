@@ -5,5 +5,72 @@ rule Compose2Manifest
 			var targetService = new Target!Service;
 			
 			var targetDeployment.apiVersion = "apps/v1";
-			var targetDeployment.replicas = s.r
+			var targetDeployment.replicas = "1";
+
+			var targetDeploymentMetadata = new Target!Metadata;
+			var targetDeploymentMetadata.name = s.name;
+			var targetDeploymentMetadata.labels = new Target!Label;
+			var targetDeploymentMetadata.labels.app = s.name;
+			targetDeployment.metadata = targetDeploymentMetadata;
+
+			var targetDeploymentSelector = new Target!DeploymentSelector;
+			var targetDeploymentSelectorMatchLabels = new Target!MatchLabel;
+			var targetDeploymentSelectorMatchLabels.app = s.name;
+			targetDeploymentSelector.matchLabels = targetDeploymentSelectorMatchLabels;
+			targetDeployment.deploymentSelector = targetDeploymentSelector;
+
+			var targetDeploymentTemplate = new Target!DeploymentTemplate;
+			var targetDeploymentTemplateMetadata = new Target!Metadata;
+			var targetDeploymentTemplateMetadataLabels = new Target!Label;
+			var targetDeploymentTemplateMetadataLabels.app = s.name;
+			targetDeploymentTemplateMetadata.labels = targetDeploymentTemplateMetadataLabels;
+			targetDeploymentTemplateMetadata.name = s.name;
+			targetDeploymentTemplate.metadata = targetDeploymentTemplateMetadata;
+
+			var targetDeploymentTemplateSpec = new Target!TemplateSpec;
+
+			var targetDeploymentTemplateSpecContainers = new Target!Container;
+			targetDeploymentTemplateSpecContainers.image = s.image;
+			targetDeploymentTemplateSpecContainers.name = s.name;
+
+			var targetDeploymentTemplateSpecContainersPorts = new Target!DeploymentPort;
+			targetDeploymentTemplateSpecContainersPorts.containerPort = s.ports.container;
+			targetDeploymentTemplateSpecContainers.ports = targetDeploymentTemplateSpecContainersPorts;
+
+			var targetDeploymentTemplateSpecContainersEnv = new Target!Env;
+			targetDeploymentTemplateSpecContainersEnv.name = s.env.name;
+			targetDeploymentTemplateSpecContainersEnv.value = s.env.value;
+			targetDeploymentTemplateSpecContainers.env = targetDeploymentTemplateSpecContainersEnv;
+
+			var targetDeploymentTemplateSpecContainersVolumeMounts = new Target!VolumeMount;
+			targetDeploymentTemplateSpecContainersVolumeMounts.mountPath = s.volumes.mountPath;
+			targetDeploymentTemplateSpecContainersVolumeMounts.name = s.volumes.name;
+			targetDeploymentTemplateSpecContainers.volumeMounts = targetDeploymentTemplateSpecContainersVolumeMounts;
+
+			targetDeploymentTemplateSpec.containers = targetDeploymentTemplateSpecContainers;
+
+			targetDeploymentTemplate.templateSpec = targetDeploymentTemplateSpec;
+
+			targetDeployment.deploymentTemplate = targetDeploymentTemplate;
+
+			t.deployment = targetDeployment;
+
+			var targetService.apiVersion = "v1";
+			var targetService.kind = "Service";
+
+			var targetServiceSelector = new Target!ServiceSelector;
+			targetServiceSelector.app = s.name;
+			targetService.selector = targetServiceSelector;
+
+			var targetServiceMetadata = new Target!Metadata;
+			targetServiceMetadata.name = s.name;
+			targetService.metadata = targetServiceMetadata;
+
+			var targetServicePorts = new Target!ServicePort;
+			targetServicePorts.port = s.ports.host;
+			targetServicePorts.targetPort = s.ports.container;
+			targetService.ports = targetServicePorts;
+
+			t.service = targetService;
+
 		}
