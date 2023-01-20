@@ -1,0 +1,48 @@
+[%var manifest = Manifest.all.first();%]
+-- deployment.yml
+apiVersion: [%=manifest.deployment.apiVersion%]
+kind: Deployment
+metadata:
+	name: [%=manifest.deployment.deploymentSelector.matchLabels.app%]
+spec:
+	replicas: [%=manifest.deployment.replicas%]
+	selector:
+		matchLabels:
+			app: [%=manifest.deployment.deploymentSelector.matchLabel.app%]
+	template:
+		metadata:
+			labels:
+				app: [%=manifest.deployment.metadata.labels%]
+		spec:
+			containers:
+				[%var container = manifest.deployment.deploymentTemplate.templateSpec.container;%]
+				- name: [%=container.name%]
+					image: [%=container.image%]
+					[%for (port in container.ports) {%]
+					ports:
+						- containerPort: [%=port.containerPort%]
+					[%}%]
+					[%for (env in container.env) {%]
+					env:
+						- name: [%=env.name%]
+							value: [%=env.value%]
+					[%}%]
+					[%for (volumeMount in container.volumeMounts) {%]
+					volumeMounts:
+						- name: [%=volumeMount.name%]
+							mountPath: [%=volumeMount.mountPath%]
+					[%}%]
+
+-- service.yml
+apiVersion: [%=manifest.service.apiVersion%]
+kind: Service
+metadata:
+	name: [%=manifest.service.metadata.name%]
+spec:
+	selector:
+		app: [%=manifest.service.serviceSelector.app%]
+	ports:
+		- protocol: TCP
+			port: [%=manifest.service.servicePorts.port%]
+			targetPort: [%=manifest.service.servicePorts.targetPort%]
+

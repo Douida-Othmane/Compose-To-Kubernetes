@@ -12,7 +12,6 @@ class Compose {
 class Service {
 	attr String[1] name;
 	attr String[1] image;
-	attr String[1] build;
 	attr String[1] command;
 	val Service[*] depends_on;
 	val Port[*] ports;

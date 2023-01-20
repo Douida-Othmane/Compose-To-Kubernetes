@@ -1,0 +1,9 @@
+rule Compose2Manifest
+	transform s : Source!Compose 
+		to t : Target!Manifest {
+			var targetDeployment = new Target!Deployment;
+			var targetService = new Target!Service;
+			
+			var targetDeployment.apiVersion = "apps/v1";
+			var targetDeployment.replicas = s.r
+		}
