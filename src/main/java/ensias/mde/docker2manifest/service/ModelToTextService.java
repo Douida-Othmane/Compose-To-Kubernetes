@@ -8,14 +8,14 @@ import org.springframework.stereotype.Service;
 
 import jakarta.annotation.PostConstruct;
 import java.io.File;
-import java.util.Map;
 
 @Service
 public class ModelToTextService {
     private String modelToText;
 
-    public String ModelToText(InMemoryEmfModel model, String manifestK8S) throws Exception
+    public String ModelToText(InMemoryEmfModel model) throws Exception
     {
+        System.out.println("modeltotext");
         IEglModule module = (IEglModule) new EglTemplateFactoryModuleAdapter();
         module.parse(modelToText, new File("/program.egl"));
         if(!module.getParseProblems().isEmpty())
@@ -27,8 +27,7 @@ public class ModelToTextService {
     }
 
     @PostConstruct
-    public void loadFiles()
-    {
+    public void loadFiles() {
         modelToText = FileReader.readFile("transformations/manifest.egl");
     }
 }

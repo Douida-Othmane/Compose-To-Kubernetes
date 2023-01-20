@@ -15,7 +15,8 @@ public class ModelToModelService {
     private  String manifestK8S;
     private String dockerCompose;
 
-    public InMemoryEmfModel modelToModelTransformation(String inputFlexmi, String manifestK8SFlexmi) throws Exception {
+    public InMemoryEmfModel modelToModelTransformation(String inputFlexmi) throws Exception {
+        System.out.println("modeltomodeltr");
         EtlModule module = new EtlModule();
         module.parse(manifestK8S, new File("/program.etl"));
         if(!module.getParseProblems().isEmpty()){
@@ -26,16 +27,17 @@ public class ModelToModelService {
                 module,
                 inputFlexmi,
                 dockerCompose,
-                manifestK8SFlexmi
+                manifestK8S
         );
     }
 
     private InMemoryEmfModel runTransformation(EtlModule module, String inputFlexmi, String inputEmfatic, String manifestK8SEmfatic)
             throws IOException, EolRuntimeException {
+        System.out.println("runTransformation");
         InMemoryEmfModel inputModel = ModelLoader.getInMemoryFlexmiModel(inputFlexmi, inputEmfatic);
         inputModel.setName("Input");
 
-        InMemoryEmfModel manifestK8SModel = ModelLoader.getInMemoryFlexmiModel(inputFlexmi, inputEmfatic);
+        InMemoryEmfModel manifestK8SModel = ModelLoader.getBlankInMemoryModel(manifestK8SEmfatic);
         inputModel.setName("Target");
 
         module.getContext().getModelRepository().addModel(inputModel);
@@ -47,7 +49,7 @@ public class ModelToModelService {
     @PostConstruct
     public void loadFiles()
     {
-        manifestK8S = FileReader.readFile("transformations/compose2manifests.etl");
-        dockerCompose = FileReader.readFile("models/gcipm.emf");
+        manifestK8S = FileReader.readFile("transformations/compose2manifest.etl");
+        dockerCompose = FileReader.readFile("models/compose.emf");
     }
 }
