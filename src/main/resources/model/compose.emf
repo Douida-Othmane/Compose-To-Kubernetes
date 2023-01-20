@@ -1,0 +1,36 @@
+@namespace(
+	uri="config",
+	prefix="")
+
+package config;
+
+class Compose {
+	attr String[1] version;
+	val Service[*] services;
+}
+
+class Service {
+	attr String[1] name;
+	attr String[1] image;
+	attr String[1] build;
+	attr String[1] command;
+	val Service[*] depends_on;
+	val Port[*] ports;
+	val Volume[*] volumes;
+	val Environment[*] environmentVariables;
+}
+
+class Port {
+	attr String[1] host;
+	attr String[1] container;
+}
+
+class Volume {
+	attr String[1] host;
+	attr String[1] container;
+}
+
+class Environment {
+	attr String[1] name;
+	attr String[1] value;
+}
