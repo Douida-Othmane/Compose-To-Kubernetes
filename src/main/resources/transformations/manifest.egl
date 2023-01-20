@@ -18,20 +18,14 @@ spec:
 				[%var container = manifest.deployment.deploymentTemplate.templateSpec.container;%]
 				- name: [%=container.name%]
 					image: [%=container.image%]
-					[%for (port in container.ports) {%]
 					ports:
-						- containerPort: [%=port.containerPort%]
-					[%}%]
-					[%for (env in container.env) {%]
+						- containerPort: [%=container.ports.containerPort%]
 					env:
-						- name: [%=env.name%]
-							value: [%=env.value%]
-					[%}%]
-					[%for (volumeMount in container.volumeMounts) {%]
+						- name: [%=container.env.name%]
+							value: [%=container.env.value%]
 					volumeMounts:
-						- name: [%=volumeMount.name%]
-							mountPath: [%=volumeMount.mountPath%]
-					[%}%]
+						- name: [%=container.volumeMounts.name%]
+							mountPath: [%=container.volumeMounts.mountPath%]
 
 -- service.yml
 apiVersion: [%=manifest.service.apiVersion%]
