@@ -1,6 +1,6 @@
 rule Compose2Manifest
-	transform s : Source!Compose 
-		to t : Target!Manifest {
+	transform s : Compose
+		to t : Manifest {
 			var targetDeployment = new Target!Deployment;
 			var targetService = new Target!Service;
 			

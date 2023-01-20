@@ -21,7 +21,7 @@ public class ModelToModelService {
     public InMemoryEmfModel modelToModelTransformation(String inputFlexmi) throws Exception {
         System.out.println("modeltomodeltr");
         EtlModule module = new EtlModule();
-        module.parse(transformation, new File("/program.etl"));
+        module.parse(transformation);
         if(!module.getParseProblems().isEmpty()){
             throw new RuntimeException(module.getParseProblems().get(0).toString());
         }
@@ -38,13 +38,14 @@ public class ModelToModelService {
             throws IOException, EolRuntimeException {
         System.out.println("runTransformation");
         InMemoryEmfModel inputModel = ModelLoader.getInMemoryFlexmiModel(inputFlexmi, inputEmfatic);
-        inputModel.setName("Input");
+        inputModel.setName("Source");
         System.out.println(inputModel);
         InMemoryEmfModel manifestK8SModel = ModelLoader.getBlankInMemoryModel(manifestK8SEmfatic);
         inputModel.setName("Target");
         System.out.println(manifestK8SModel);
         module.getContext().getModelRepository().addModel(inputModel);
         module.getContext().getModelRepository().addModel(manifestK8SModel);
+        System.out.println(module.getContext());
         module.execute();
         System.out.println(manifestK8SModel);
         return manifestK8SModel;
