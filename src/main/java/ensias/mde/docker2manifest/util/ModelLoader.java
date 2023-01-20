@@ -19,7 +19,6 @@ public class ModelLoader
     {
         ResourceSet resourceSet = new ResourceSetImpl();
         EPackage ePackage = getEPackage(emfatic);
-
         resourceSet.getPackageRegistry().put(ePackage.getNsURI(), ePackage);
         resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put("*", new FlexmiResourceFactory());
 
@@ -35,7 +34,6 @@ public class ModelLoader
     {
         ResourceSet resourceSet = new ResourceSetImpl();
         EPackage ePackage = getEPackage(emfatic);
-
         resourceSet.getPackageRegistry().put(ePackage.getNsURI(), ePackage);
         resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put("*", new FlexmiResourceFactory());
 
@@ -55,18 +53,15 @@ public class ModelLoader
 
     private static EPackage getEPackage(String emfatic) throws IOException
     {
-        if(emfatic == null || emfatic.trim().isEmpty())
-        {
+        if(emfatic == null || emfatic.trim().isEmpty()) {
             return EcorePackage.eINSTANCE;
         }
         EmfaticResource emfaticResource = new EmfaticResource(URI.createURI("emfatic.emf"));
         emfaticResource.load(new ByteArrayInputStream(emfatic.getBytes()), null);
-        /*
-        if(!emfaticResource.getErrors().isEmpty())
-        {
+
+        if(!emfaticResource.getErrors().isEmpty()) {
             throw new RuntimeException(emfaticResource.getErrors().toString());
         }
-        */
         return (EPackage) emfaticResource.getContents().get(0);
     }
 }

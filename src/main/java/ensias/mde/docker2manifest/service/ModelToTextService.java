@@ -6,12 +6,12 @@ import org.eclipse.epsilon.egl.IEglModule;
 import org.eclipse.epsilon.emc.emf.InMemoryEmfModel;
 import org.springframework.stereotype.Service;
 
-import jakarta.annotation.PostConstruct;
+import javax.annotation.PostConstruct;
 import java.io.File;
 
 @Service
 public class ModelToTextService {
-    private String modelToText;
+    private String modelToText = FileReader.readFile("transformations/manifest.egl");
 
     public String ModelToText(InMemoryEmfModel model) throws Exception
     {
@@ -26,8 +26,8 @@ public class ModelToTextService {
         return module.execute() + "";
     }
 
-    @PostConstruct
+   /* @PostConstruct
     public void loadFiles() {
-        modelToText = FileReader.readFile("transformations/manifest.egl");
-    }
+        modelToText = FileReader.readFile("C:/Users/douid/Desktop/spring/Docker2Manifest/src/main/resources/transformations/manifest.egl");
+    } */
 }

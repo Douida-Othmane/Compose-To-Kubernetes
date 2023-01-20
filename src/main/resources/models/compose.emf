@@ -1,8 +1,8 @@
 @namespace(
-	uri="config",
+	uri="compose",
 	prefix="")
 
-package config;
+package compose;
 
 class Compose {
 	attr String[1] version;
