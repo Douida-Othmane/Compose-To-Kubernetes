@@ -8,43 +8,43 @@ rule Compose2Manifest
 			var targetDeployment.replicas = "1";
 
 			var targetDeploymentMetadata = new Target!Metadata;
-			var targetDeploymentMetadata.name = s.name;
+			var targetDeploymentMetadata.name = s.service.name;
 			var targetDeploymentMetadata.labels = new Target!Label;
-			var targetDeploymentMetadata.labels.app = s.name;
+			var targetDeploymentMetadata.labels.app = s.service.name;
 			targetDeployment.metadata = targetDeploymentMetadata;
 
 			var targetDeploymentSelector = new Target!DeploymentSelector;
 			var targetDeploymentSelectorMatchLabels = new Target!MatchLabel;
-			var targetDeploymentSelectorMatchLabels.app = s.name;
+			var targetDeploymentSelectorMatchLabels.app = s.service.name;
 			targetDeploymentSelector.matchLabels = targetDeploymentSelectorMatchLabels;
 			targetDeployment.deploymentSelector = targetDeploymentSelector;
 
 			var targetDeploymentTemplate = new Target!DeploymentTemplate;
 			var targetDeploymentTemplateMetadata = new Target!Metadata;
 			var targetDeploymentTemplateMetadataLabels = new Target!Label;
-			var targetDeploymentTemplateMetadataLabels.app = s.name;
+			var targetDeploymentTemplateMetadataLabels.app = s.service.name;
 			targetDeploymentTemplateMetadata.labels = targetDeploymentTemplateMetadataLabels;
-			targetDeploymentTemplateMetadata.name = s.name;
+			targetDeploymentTemplateMetadata.name = s.service.name;
 			targetDeploymentTemplate.metadata = targetDeploymentTemplateMetadata;
 
 			var targetDeploymentTemplateSpec = new Target!TemplateSpec;
 
 			var targetDeploymentTemplateSpecContainers = new Target!Container;
-			targetDeploymentTemplateSpecContainers.image = s.image;
-			targetDeploymentTemplateSpecContainers.name = s.name;
+			targetDeploymentTemplateSpecContainers.image = s.service.image;
+			targetDeploymentTemplateSpecContainers.name = s.service.name;
 
 			var targetDeploymentTemplateSpecContainersPorts = new Target!DeploymentPort;
-			targetDeploymentTemplateSpecContainersPorts.containerPort = s.ports.container;
+			targetDeploymentTemplateSpecContainersPorts.containerPort = s.service.ports.container;
 			targetDeploymentTemplateSpecContainers.ports = targetDeploymentTemplateSpecContainersPorts;
 
 			var targetDeploymentTemplateSpecContainersEnv = new Target!Env;
-			targetDeploymentTemplateSpecContainersEnv.name = s.env.name;
-			targetDeploymentTemplateSpecContainersEnv.value = s.env.value;
+			targetDeploymentTemplateSpecContainersEnv.name = s.service.env.name;
+			targetDeploymentTemplateSpecContainersEnv.value = s.service.env.value;
 			targetDeploymentTemplateSpecContainers.env = targetDeploymentTemplateSpecContainersEnv;
 
 			var targetDeploymentTemplateSpecContainersVolumeMounts = new Target!VolumeMount;
-			targetDeploymentTemplateSpecContainersVolumeMounts.mountPath = s.volumes.mountPath;
-			targetDeploymentTemplateSpecContainersVolumeMounts.name = s.volumes.name;
+			targetDeploymentTemplateSpecContainersVolumeMounts.mountPath = s.service.volumes.mountPath;
+			targetDeploymentTemplateSpecContainersVolumeMounts.name = s.service.volumes.name;
 			targetDeploymentTemplateSpecContainers.volumeMounts = targetDeploymentTemplateSpecContainersVolumeMounts;
 
 			targetDeploymentTemplateSpec.containers = targetDeploymentTemplateSpecContainers;
@@ -59,16 +59,16 @@ rule Compose2Manifest
 			var targetService.kind = "Service";
 
 			var targetServiceSelector = new Target!ServiceSelector;
-			targetServiceSelector.app = s.name;
+			targetServiceSelector.app = s.service.name;
 			targetService.selector = targetServiceSelector;
 
 			var targetServiceMetadata = new Target!Metadata;
-			targetServiceMetadata.name = s.name;
+			targetServiceMetadata.name = s.service.name;
 			targetService.metadata = targetServiceMetadata;
 
 			var targetServicePorts = new Target!ServicePort;
-			targetServicePorts.port = s.ports.host;
-			targetServicePorts.targetPort = s.ports.container;
+			targetServicePorts.port = s.service.ports.host;
+			targetServicePorts.targetPort = s.service.ports.container;
 			targetService.ports = targetServicePorts;
 
 			t.service = targetService;
