@@ -28,10 +28,8 @@ public class ModelController {
                 "</compose>";
         InMemoryEmfModel targetModel = modelToModelService
                 .modelToModelTransformation(dkc);
-        System.out.println("targetModel");
         String generatedConfigFile = modelToTextService
                 .ModelToText(targetModel);
-        System.out.println("generatedConfigFile");
         return ResponseEntity.ok(generatedConfigFile);
     }
 }

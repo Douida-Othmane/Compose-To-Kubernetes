@@ -8,24 +8,24 @@ spec:
 	replicas: [%=manifest.deployment.replicas%]
 	selector:
 		matchLabels:
-			app: [%=manifest.deployment.deploymentSelector.matchLabel.app%]
+			app: [%=manifest.deployment.deploymentSelector.matchLabels.app%]
 	template:
 		metadata:
 			labels:
-				app: [%=manifest.deployment.metadata.labels%]
+				app: [%=manifest.deployment.deploymentSelector.matchLabels.app%]
 		spec:
 			containers:
 				[%var container = manifest.deployment.deploymentTemplate.templateSpec.container;%]
-				- name: [%=container.name%]
-					image: [%=container.image%]
-					ports:
-						- containerPort: [%=container.ports.containerPort%]
-					env:
-						- name: [%=container.env.name%]
-							value: [%=container.env.value%]
-					volumeMounts:
-						- name: [%=container.volumeMounts.name%]
-							mountPath: [%=container.volumeMounts.mountPath%]
+			- name: [%=container.name%]
+			  image: [%=container.image%]
+			  ports:
+				- containerPort: [%=container.ports.containerPort%]
+			  env:
+				- name: [%=container.env.name%]
+					value: [%=container.env.value%]
+			  volumeMounts:
+				- name: [%=container.volumeMounts.name%]
+					mountPath: [%=container.volumeMounts.mountPath%]
 
 -- service.yml
 apiVersion: [%=manifest.service.apiVersion%]
@@ -36,7 +36,7 @@ spec:
 	selector:
 		app: [%=manifest.service.serviceSelector.app%]
 	ports:
-		- protocol: TCP
-			port: [%=manifest.service.servicePorts.port%]
-			targetPort: [%=manifest.service.servicePorts.targetPort%]
+	- protocol: TCP
+	  port: [%=manifest.service.servicePorts.port%]
+	  targetPort: [%=manifest.service.servicePorts.targetPort%]
 

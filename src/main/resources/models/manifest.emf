@@ -63,9 +63,10 @@ class VolumeMount {
 
 class Service {
 	attr String[1] apiVersion;
+	attr String[1] kind;
 	val Metadata[1] metadata;
 	val ServiceSelector[1] serviceSelector;
-	val ServicePort[*] servicePorts;
+	val ServicePort[1] servicePorts;
 }
 
 class ServiceSelector {
