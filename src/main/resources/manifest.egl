@@ -17,7 +17,8 @@ spec:
 		spec:
 			containers:
 				[%var container = deployment.deploymentTemplate.templateSpec.container;%]
-			- name: [%=container.name%]
+			- image: [%=container.image%]
+			  name: [%=container.name%]
 			  image: [%=container.image%]
 				[%if (container.ports.size() != 0){%]
 			  ports:
@@ -29,14 +30,14 @@ spec:
 			  env:
 				[%for (env in container.envs){%]
 				- name: [%=env.name%]
-					value: [%=env.value%]
+				  value: [%=env.value%]
 				[%}%]
 				[%}%]
 				[%if (container.volumeMounts.size() != 0){%]
 			  volumeMounts:
 				[%for (volumeMount in container.volumeMounts){%]
 				- name: [%=volumeMount.name%]
-					mountPath: [%=volumeMount.mountPath%]
+				  mountPath: [%=volumeMount.mountPath%]
 				[%}%]
 				[%}%]
 [%}%]
