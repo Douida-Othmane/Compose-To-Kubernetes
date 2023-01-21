@@ -1,6 +1,6 @@
 [%var manifest = Manifest.all.first();%]
 [%for (deployment in manifest.deployments){%]
--- [%=deployment.deploymentSelector.matchLabels.app%]-deployment.yml
+# [%=deployment.deploymentSelector.matchLabels.app%]-deployment.yml
 apiVersion: [%=deployment.apiVersion%]
 kind: Deployment
 metadata:
@@ -19,30 +19,31 @@ spec:
 				[%var container = deployment.deploymentTemplate.templateSpec.container;%]
 			- image: [%=container.image%]
 			  name: [%=container.name%]
-			  image: [%=container.image%]
 				[%if (container.ports.size() != 0){%]
 			  ports:
 				[%for (port in container.ports){%]
-				- containerPort: [%=port.containerPort%]
+			  - containerPort: [%=port.containerPort%]
 				[%}%]
 				[%}%]
 				[%if (container.envs.size() != 0){%]
 			  env:
 				[%for (env in container.envs){%]
-				- name: [%=env.name%]
-				  value: [%=env.value%]
+			  - name: [%=env.name%]
+				value: [%=env.value%]
 				[%}%]
 				[%}%]
 				[%if (container.volumeMounts.size() != 0){%]
 			  volumeMounts:
 				[%for (volumeMount in container.volumeMounts){%]
-				- name: [%=volumeMount.name%]
-				  mountPath: [%=volumeMount.mountPath%]
+			  - name: [%=volumeMount.name%]
+				mountPath: [%=volumeMount.mountPath%]
 				[%}%]
 				[%}%]
 [%}%]
+
 [%for (service in manifest.services){%]
--- [%=service.metadata.name%]-service.yml
+---
+# [%=service.metadata.name%]-service.yml
 apiVersion: [%=service.apiVersion%]
 kind: Service
 metadata:
