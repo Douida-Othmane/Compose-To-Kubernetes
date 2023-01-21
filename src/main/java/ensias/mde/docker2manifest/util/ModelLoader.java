@@ -28,7 +28,6 @@ public class ModelLoader
 				System.out.println(resource);
 
         InMemoryEmfModel model = new InMemoryEmfModel(resource);
-        model.setName("Source");
         return model;
     }
 
@@ -43,7 +42,6 @@ public class ModelLoader
         Resource resource = resourceSet.createResource(URI.createURI("flexmi.flexmi"));
 
         InMemoryEmfModel model = new InMemoryEmfModel(resource);
-        model.setName("Target");
         return model;
     }
 

@@ -1,5 +1,6 @@
 package ensias.mde.docker2manifest.controller;
 
+import ensias.mde.docker2manifest.controller.dto.ModelingDTO;
 import ensias.mde.docker2manifest.service.ModelToModelService;
 import ensias.mde.docker2manifest.service.ModelToTextService;
 import org.eclipse.epsilon.emc.emf.InMemoryEmfModel;
@@ -17,19 +18,13 @@ public class ModelController {
     @Autowired
     private ModelToTextService modelToTextService;
     @PostMapping("/transform")
-    public ResponseEntity<?> forwardEngineering(@RequestBody String dockerCompose) throws Exception {
-        String dkc = "<?nsuri compose?>\n" +
-                "<compose version=\"1\">" +
-                    "<service name=\"my-app\" image=\"node:latest\">\n" +
-                        "<port host=\"80\" container=\"80\" />\n" +
-                        "<volume name=\"my-volume\" container=\"/path/in/container\" />\n" +
-                        "<environment name=\"PASSWORD\" value=\"test\" />\n" +
-                    "</service>\n" +
-                "</compose>";
+    public ResponseEntity<?> forwardEngineering(@RequestBody ModelingDTO modelingDTO) throws Exception {
+
         InMemoryEmfModel targetModel = modelToModelService
-                .modelToModelTransformation(dkc);
+                .modelToModelTransformation(modelingDTO.getDockerCompose());
         String generatedConfigFile = modelToTextService
                 .ModelToText(targetModel);
         return ResponseEntity.ok(generatedConfigFile);
     }
 }
+

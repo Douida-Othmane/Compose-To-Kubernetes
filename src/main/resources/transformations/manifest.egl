@@ -1,42 +1,60 @@
 [%var manifest = Manifest.all.first();%]
--- deployment.yml
-apiVersion: [%=manifest.deployment.apiVersion%]
+[%for (deployment in manifest.deployments){%]
+-- [%=deployment.deploymentSelector.matchLabels.app%]-deployment.yml
+apiVersion: [%=deployment.apiVersion%]
 kind: Deployment
 metadata:
-	name: [%=manifest.deployment.deploymentSelector.matchLabels.app%]
+	name: [%=deployment.deploymentSelector.matchLabels.app%]
 spec:
-	replicas: [%=manifest.deployment.replicas%]
+	replicas: [%=deployment.replicas%]
 	selector:
 		matchLabels:
-			app: [%=manifest.deployment.deploymentSelector.matchLabels.app%]
+			app: [%=deployment.deploymentSelector.matchLabels.app%]
 	template:
 		metadata:
 			labels:
-				app: [%=manifest.deployment.deploymentSelector.matchLabels.app%]
+				app: [%=deployment.deploymentSelector.matchLabels.app%]
 		spec:
 			containers:
-				[%var container = manifest.deployment.deploymentTemplate.templateSpec.container;%]
+				[%var container = deployment.deploymentTemplate.templateSpec.container;%]
 			- name: [%=container.name%]
 			  image: [%=container.image%]
+				[%if (container.ports.size() != 0){%]
 			  ports:
-				- containerPort: [%=container.ports.containerPort%]
+				[%for (port in container.ports){%]
+				- containerPort: [%=port.containerPort%]
+				[%}%]
+				[%}%]
+				[%if (container.envs.size() != 0){%]
 			  env:
-				- name: [%=container.env.name%]
-					value: [%=container.env.value%]
+				[%for (env in container.envs){%]
+				- name: [%=env.name%]
+					value: [%=env.value%]
+				[%}%]
+				[%}%]
+				[%if (container.volumeMounts.size() != 0){%]
 			  volumeMounts:
-				- name: [%=container.volumeMounts.name%]
-					mountPath: [%=container.volumeMounts.mountPath%]
-
--- service.yml
-apiVersion: [%=manifest.service.apiVersion%]
+				[%for (volumeMount in container.volumeMounts){%]
+				- name: [%=volumeMount.name%]
+					mountPath: [%=volumeMount.mountPath%]
+				[%}%]
+				[%}%]
+[%}%]
+[%for (service in manifest.services){%]
+-- [%=service.metadata.name%]-service.yml
+apiVersion: [%=service.apiVersion%]
 kind: Service
 metadata:
-	name: [%=manifest.service.metadata.name%]
+	name: [%=service.metadata.name%]
 spec:
 	selector:
-		app: [%=manifest.service.serviceSelector.app%]
+		app: [%=service.serviceSelector.app%]
+	[%if (service.servicePorts.size() != 0){%]
 	ports:
+	[%for (port in service.servicePorts){%]
 	- protocol: TCP
-	  port: [%=manifest.service.servicePorts.port%]
-	  targetPort: [%=manifest.service.servicePorts.targetPort%]
-
+	  port: [%=port.port%]
+	  targetPort: [%=port.targetPort%]
+	[%}%]
+	[%}%]
+[%}%]

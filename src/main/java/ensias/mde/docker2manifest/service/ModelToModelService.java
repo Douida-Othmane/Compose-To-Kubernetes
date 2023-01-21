@@ -10,8 +10,8 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
 
-import java.io.File;
 import java.io.IOException;
+
 @Service
 public class ModelToModelService {
     private  String manifestK8S;
