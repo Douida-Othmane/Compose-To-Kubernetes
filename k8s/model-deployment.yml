@@ -13,9 +13,9 @@ spec:
         app: model
     spec:
       containers:
-        - name: model
-          image: sato2000/compose2kubernetes:latest
-          ports:
+      - image: sato2000/compose2kubernetes:latest
+        name: model
+        ports:
         - containerPort: 8080
 
 ---
