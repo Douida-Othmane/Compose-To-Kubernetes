@@ -1,0 +1,10 @@
+version: "3.9"
+services:
+  model:
+    image: sato2000/compose2kubernetes:latest
+    ports:
+      - "8080:8080"
+    networks:
+      - mde_net
+networks:
+  mde_net:
