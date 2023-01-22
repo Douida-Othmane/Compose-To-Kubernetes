@@ -6,7 +6,7 @@ package compose;
 
 class Compose {
 	attr String[1] version;
-	val Service[1] service;
+	val Service[*] services;
 }
 
 class Service {

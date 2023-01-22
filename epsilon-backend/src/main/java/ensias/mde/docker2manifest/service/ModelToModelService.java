@@ -14,7 +14,7 @@ import java.io.IOException;
 
 @Service
 public class ModelToModelService {
-    private  String manifestK8S;
+    private String manifestK8S;
     private String  dockerCompose;
     private String transformation;
 
@@ -39,15 +39,11 @@ public class ModelToModelService {
         System.out.println("runTransformation");
         InMemoryEmfModel inputModel = ModelLoader.getInMemoryFlexmiModel(inputFlexmi, inputEmfatic);
         inputModel.setName("Source");
-        System.out.println(inputModel);
         InMemoryEmfModel manifestK8SModel = ModelLoader.getBlankInMemoryModel(manifestK8SEmfatic);
-        inputModel.setName("Target");
-        System.out.println(manifestK8SModel);
+        manifestK8SModel.setName("Target");
         module.getContext().getModelRepository().addModel(inputModel);
         module.getContext().getModelRepository().addModel(manifestK8SModel);
-        System.out.println(module.getContext());
         module.execute();
-        System.out.println(manifestK8SModel);
         return manifestK8SModel;
     }
 
@@ -55,8 +51,8 @@ public class ModelToModelService {
     public void loadFiles()
     {
 
-        manifestK8S = FileReader.readFile("models/manifest.emf");
-        dockerCompose = FileReader.readFile("models/compose.emf");
-        transformation = FileReader.readFile("transformations/compose2manifest.etl");
+        manifestK8S = FileReader.readFile("/manifest.emf");
+        dockerCompose = FileReader.readFile("/compose.emf");
+        transformation = FileReader.readFile("/compose2manifest.etl");
     }
 }

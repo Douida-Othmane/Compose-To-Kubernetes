@@ -1,76 +1,86 @@
 rule Compose2Manifest
-	transform s : Compose
-		to t : Manifest {
-			var targetDeployment = new Target!Deployment;
-			var targetService = new Target!Service;
-			
-			var targetDeployment.apiVersion = "apps/v1";
-			var targetDeployment.replicas = "1";
+	transform s : Source!Compose
+		to t : Target!Manifest {
+			for(service in s.services){
+				var targetDeployment = new Target!Deployment;
+				var targetService = new Target!Service;
 
-			var targetDeploymentMetadata = new Target!Metadata;
-			var targetDeploymentMetadata.name = s.service.name;
-			var targetDeploymentMetadata.labels = new Target!Label;
-			var targetDeploymentMetadata.labels.app = s.service.name;
-			targetDeployment.metadata = targetDeploymentMetadata;
+				targetDeployment.apiVersion = "apps/v1";
+				targetDeployment.replicas = "1";
 
-			var targetDeploymentSelector = new Target!DeploymentSelector;
-			var targetDeploymentSelectorMatchLabels = new Target!MatchLabel;
-			var targetDeploymentSelectorMatchLabels.app = s.service.name;
-			targetDeploymentSelector.matchLabels = targetDeploymentSelectorMatchLabels;
-			targetDeployment.deploymentSelector = targetDeploymentSelector;
+				var targetDeploymentMetadata = new Target!Metadata;
+				targetDeploymentMetadata.name = service.name;
+				targetDeploymentMetadata.labels = new Target!Label;
+				targetDeploymentMetadata.labels.app = service.name;
+				targetDeployment.metadata = targetDeploymentMetadata;
 
-			var targetDeploymentTemplate = new Target!DeploymentTemplate;
-			var targetDeploymentTemplateMetadata = new Target!Metadata;
-			var targetDeploymentTemplateMetadataLabels = new Target!Label;
-			var targetDeploymentTemplateMetadataLabels.app = s.service.name;
-			targetDeploymentTemplateMetadata.labels = targetDeploymentTemplateMetadataLabels;
-			targetDeploymentTemplateMetadata.name = s.service.name;
-			targetDeploymentTemplate.metadata = targetDeploymentTemplateMetadata;
+				var targetDeploymentSelector = new Target!DeploymentSelector;
+				var targetDeploymentSelectorMatchLabels = new Target!MatchLabel;
+				targetDeploymentSelectorMatchLabels.app = service.name;
+				targetDeploymentSelector.matchLabels = targetDeploymentSelectorMatchLabels;
+				targetDeployment.deploymentSelector = targetDeploymentSelector;
 
-			var targetDeploymentTemplateSpec = new Target!TemplateSpec;
+				var targetDeploymentTemplate = new Target!DeploymentTemplate;
+				var targetDeploymentTemplateMetadata = new Target!Metadata;
+				var targetDeploymentTemplateMetadataLabels = new Target!Label;
+				targetDeploymentTemplateMetadataLabels.app = service.name;
+				targetDeploymentTemplateMetadata.labels = targetDeploymentTemplateMetadataLabels;
+				targetDeploymentTemplateMetadata.name = service.name;
+				targetDeploymentTemplate.metadata = targetDeploymentTemplateMetadata;
 
-			var targetDeploymentTemplateSpecContainers = new Target!Container;
-			targetDeploymentTemplateSpecContainers.image = s.service.image;
-			targetDeploymentTemplateSpecContainers.name = s.service.name;
+				var targetDeploymentTemplateSpec = new Target!TemplateSpec;
 
-			var targetDeploymentTemplateSpecContainersPorts = new Target!DeploymentPort;
-			targetDeploymentTemplateSpecContainersPorts.containerPort = s.service.ports.container;
-			targetDeploymentTemplateSpecContainers.ports = targetDeploymentTemplateSpecContainersPorts;
+				var targetDeploymentTemplateSpecContainers = new Target!Container;
+				targetDeploymentTemplateSpecContainers.image = service.image;
+				targetDeploymentTemplateSpecContainers.name = service.name;
 
-			var targetDeploymentTemplateSpecContainersEnv = new Target!Env;
-			targetDeploymentTemplateSpecContainersEnv.name = s.service.env.name;
-			targetDeploymentTemplateSpecContainersEnv.value = s.service.env.value;
-			targetDeploymentTemplateSpecContainers.env = targetDeploymentTemplateSpecContainersEnv;
+				for(port in service.ports){
+					var targetDeploymentTemplateSpecContainersPorts = new Target!DeploymentPort;
+					targetDeploymentTemplateSpecContainersPorts.containerPort = port.container;
+					targetDeploymentTemplateSpecContainers.ports.add(targetDeploymentTemplateSpecContainersPorts);
+				}
 
-			var targetDeploymentTemplateSpecContainersVolumeMounts = new Target!VolumeMount;
-			targetDeploymentTemplateSpecContainersVolumeMounts.mountPath = s.service.volumes.mountPath;
-			targetDeploymentTemplateSpecContainersVolumeMounts.name = s.service.volumes.name;
-			targetDeploymentTemplateSpecContainers.volumeMounts = targetDeploymentTemplateSpecContainersVolumeMounts;
+				for(env in service.environmentVariables){
+					var targetDeploymentTemplateSpecContainersEnv = new Target!Env;
+					targetDeploymentTemplateSpecContainersEnv.name = env.name;
+					targetDeploymentTemplateSpecContainersEnv.value = env.value;
+					targetDeploymentTemplateSpecContainers.envs.add(targetDeploymentTemplateSpecContainersEnv);
+				}
 
-			targetDeploymentTemplateSpec.containers = targetDeploymentTemplateSpecContainers;
+				for(volume in service.volumes){
+					var targetDeploymentTemplateSpecContainersVolumeMounts = new Target!VolumeMount;
+					targetDeploymentTemplateSpecContainersVolumeMounts.mountPath = volume.container;
+					targetDeploymentTemplateSpecContainersVolumeMounts.name = volume.name;
+					targetDeploymentTemplateSpecContainers.volumeMounts.add(targetDeploymentTemplateSpecContainersVolumeMounts);
+				}
 
-			targetDeploymentTemplate.templateSpec = targetDeploymentTemplateSpec;
+				targetDeploymentTemplateSpec.container = targetDeploymentTemplateSpecContainers;
 
-			targetDeployment.deploymentTemplate = targetDeploymentTemplate;
+				targetDeploymentTemplate.templateSpec = targetDeploymentTemplateSpec;
 
-			t.deployment = targetDeployment;
+				targetDeployment.deploymentTemplate = targetDeploymentTemplate;
 
-			var targetService.apiVersion = "v1";
-			var targetService.kind = "Service";
+				t.deployments.add(targetDeployment);
 
-			var targetServiceSelector = new Target!ServiceSelector;
-			targetServiceSelector.app = s.service.name;
-			targetService.selector = targetServiceSelector;
+				targetService.apiVersion = "v1";
+				targetService.kind = "Service";
 
-			var targetServiceMetadata = new Target!Metadata;
-			targetServiceMetadata.name = s.service.name;
-			targetService.metadata = targetServiceMetadata;
+				var targetServiceSelector = new Target!ServiceSelector;
+				targetServiceSelector.app = service.name;
+				targetService.serviceSelector = targetServiceSelector;
 
-			var targetServicePorts = new Target!ServicePort;
-			targetServicePorts.port = s.service.ports.host;
-			targetServicePorts.targetPort = s.service.ports.container;
-			targetService.ports = targetServicePorts;
+				var targetServiceMetadata = new Target!Metadata;
+				targetServiceMetadata.name = service.name;
+				targetService.metadata = targetServiceMetadata;
 
-			t.service = targetService;
+				for (port in service.ports) {
+					var targetServicePorts = new Target!ServicePort;
+					targetServicePorts.port = port.host;
+					targetServicePorts.targetPort = port.container;
+					targetService.servicePorts.add(targetServicePorts);
+				}
 
+
+				t.services.add(targetService);
+			}
 		}

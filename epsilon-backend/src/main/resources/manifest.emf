@@ -1,5 +1,6 @@
-@namespace(uri="compose",prefix="")
-package compose;
+@namespace(uri="manifest",prefix="")
+package manifest;
+
 class Manifest {
 	val Deployment[*] deployments;
 	val Service[*] services;

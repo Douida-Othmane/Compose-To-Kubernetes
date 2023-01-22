@@ -11,7 +11,7 @@ import java.io.File;
 
 @Service
 public class ModelToTextService {
-    private String modelToText = FileReader.readFile("transformations/manifest.egl");
+    private String modelToText = FileReader.readFile("/manifest.egl");
 
     public String ModelToText(InMemoryEmfModel model) throws Exception
     {

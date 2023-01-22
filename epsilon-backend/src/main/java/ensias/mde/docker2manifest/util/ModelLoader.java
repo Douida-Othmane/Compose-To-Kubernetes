@@ -19,13 +19,12 @@ public class ModelLoader
     {
         ResourceSet resourceSet = new ResourceSetImpl();
         EPackage ePackage = getEPackage(emfatic);
+
         resourceSet.getPackageRegistry().put(ePackage.getNsURI(), ePackage);
         resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put("*", new FlexmiResourceFactory());
-				System.out.println(resourceSet);
 
         Resource resource = resourceSet.createResource(URI.createURI("flexmi.flexmi"));
         resource.load(new ByteArrayInputStream(flexmi.getBytes()), null);
-				System.out.println(resource);
 
         InMemoryEmfModel model = new InMemoryEmfModel(resource);
         return model;
@@ -35,12 +34,9 @@ public class ModelLoader
     {
         ResourceSet resourceSet = new ResourceSetImpl();
         EPackage ePackage = getEPackage(emfatic);
-				System.out.println(ePackage.toString());
         resourceSet.getPackageRegistry().put(ePackage.getNsURI(), ePackage);
         resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put("*", new FlexmiResourceFactory());
-
         Resource resource = resourceSet.createResource(URI.createURI("flexmi.flexmi"));
-
         InMemoryEmfModel model = new InMemoryEmfModel(resource);
         return model;
     }
