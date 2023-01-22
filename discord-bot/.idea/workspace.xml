@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="b99b1b94-f4ef-4c53-9f93-3f38ed4102b3" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.mvn/wrapper/maven-wrapper.jar" beforeDir="false" afterPath="$PROJECT_DIR$/epsilon-backend/.mvn/wrapper/maven-wrapper.jar" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.mvn/wrapper/maven-wrapper.properties" beforeDir="false" afterPath="$PROJECT_DIR$/epsilon-backend/.mvn/wrapper/maven-wrapper.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/epsilon-backend/Dockerfile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/epsilon-backend/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/k8s/ingress.yml" beforeDir="false" afterPath="$PROJECT_DIR$/epsilon-backend/k8s/ingress.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/k8s/model-deployment.yml" beforeDir="false" afterPath="$PROJECT_DIR$/epsilon-backend/k8s/model-deployment.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mvnw" beforeDir="false" afterPath="$PROJECT_DIR$/epsilon-backend/mvnw" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mvnw.cmd" beforeDir="false" afterPath="$PROJECT_DIR$/epsilon-backend/mvnw.cmd" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/epsilon-backend/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ensias/mde/docker2manifest/Docker2ManifestApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/epsilon-backend/src/main/java/ensias/mde/docker2manifest/Docker2ManifestApplication.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ensias/mde/docker2manifest/controller/ModelController.java" beforeDir="false" afterPath="$PROJECT_DIR$/epsilon-backend/src/main/java/ensias/mde/docker2manifest/controller/ModelController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ensias/mde/docker2manifest/controller/dto/ModelingDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/epsilon-backend/src/main/java/ensias/mde/docker2manifest/controller/dto/ModelingDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ensias/mde/docker2manifest/service/ModelToModelService.java" beforeDir="false" afterPath="$PROJECT_DIR$/epsilon-backend/src/main/java/ensias/mde/docker2manifest/service/ModelToModelService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ensias/mde/docker2manifest/service/ModelToTextService.java" beforeDir="false" afterPath="$PROJECT_DIR$/epsilon-backend/src/main/java/ensias/mde/docker2manifest/service/ModelToTextService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ensias/mde/docker2manifest/util/FileReader.java" beforeDir="false" afterPath="$PROJECT_DIR$/epsilon-backend/src/main/java/ensias/mde/docker2manifest/util/FileReader.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ensias/mde/docker2manifest/util/ModelLoader.java" beforeDir="false" afterPath="$PROJECT_DIR$/epsilon-backend/src/main/java/ensias/mde/docker2manifest/util/ModelLoader.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/epsilon-backend/src/main/resources/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/compose.emf" beforeDir="false" afterPath="$PROJECT_DIR$/epsilon-backend/src/main/resources/compose.emf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/compose2manifest.etl" beforeDir="false" afterPath="$PROJECT_DIR$/epsilon-backend/src/main/resources/compose2manifest.etl" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/manifest.egl" beforeDir="false" afterPath="$PROJECT_DIR$/epsilon-backend/src/main/resources/manifest.egl" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/manifest.emf" beforeDir="false" afterPath="$PROJECT_DIR$/epsilon-backend/src/main/resources/manifest.emf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/ensias/mde/docker2manifest/Docket2ManifestApplicationTests.java" beforeDir="false" afterPath="$PROJECT_DIR$/epsilon-backend/src/test/java/ensias/mde/docker2manifest/Docket2ManifestApplicationTests.java" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="main" />
+      </map>
+    </option>
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="MavenImportPreferences">
+    <option name="generalSettings">
+      <MavenGeneralSettings>
+        <option name="useMavenConfig" value="true" />
+      </MavenGeneralSettings>
+    </option>
+  </component>
+  <component name="ProjectId" id="2KgYF1jLCWqd81S6Ld9oASeYFcw" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "last_opened_file_path": "C:/Users/zemms/Desktop/Compose-To-Kubernetes",
+    "node.js.detected.package.eslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm"
+  }
+}]]></component>
+  <component name="RunManager">
+    <configuration name="Docker2ManifestApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
+      <module name="Docker2Manifest" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="ensias.mde.docker2manifest.Docker2ManifestApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="b99b1b94-f4ef-4c53-9f93-3f38ed4102b3" name="Changes" comment="" />
+      <created>1674397585505</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1674397585505</updated>
+      <workItem from="1674397586997" duration="343000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+</project>
