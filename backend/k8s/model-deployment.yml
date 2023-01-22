@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: model
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: model
+  template:
+    metadata:
+      labels:
+        app: model
+    spec:
+      containers:
+      - image: sato2000/compose2kubernetes:latest
+        name: model
+        ports:
+        - containerPort: 8080
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: model
+spec:
+  selector:
+    app: model
+  ports:
+    - protocol: TCP
+      port: 8080
+      targetPort: 8080

@@ -1,0 +1,62 @@
+[%var manifest = Manifest.all.first();%]
+[%for (deployment in manifest.deployments){%]
+# [%=deployment.deploymentSelector.matchLabels.app%]-deployment.yml
+apiVersion: [%=deployment.apiVersion%]
+kind: Deployment
+metadata:
+	name: [%=deployment.deploymentSelector.matchLabels.app%]
+spec:
+	replicas: [%=deployment.replicas%]
+	selector:
+		matchLabels:
+			app: [%=deployment.deploymentSelector.matchLabels.app%]
+	template:
+		metadata:
+			labels:
+				app: [%=deployment.deploymentSelector.matchLabels.app%]
+		spec:
+			containers:
+				[%var container = deployment.deploymentTemplate.templateSpec.container;%]
+			- image: [%=container.image%]
+			  name: [%=container.name%]
+				[%if (container.ports.size() != 0){%]
+			  ports:
+				[%for (port in container.ports){%]
+			  - containerPort: [%=port.containerPort%]
+				[%}%]
+				[%}%]
+				[%if (container.envs.size() != 0){%]
+			  env:
+				[%for (env in container.envs){%]
+			  - name: [%=env.name%]
+				value: [%=env.value%]
+				[%}%]
+				[%}%]
+				[%if (container.volumeMounts.size() != 0){%]
+			  volumeMounts:
+				[%for (volumeMount in container.volumeMounts){%]
+			  - name: [%=volumeMount.name%]
+				mountPath: [%=volumeMount.mountPath%]
+				[%}%]
+				[%}%]
+[%}%]
+
+[%for (service in manifest.services){%]
+---
+# [%=service.metadata.name%]-service.yml
+apiVersion: [%=service.apiVersion%]
+kind: Service
+metadata:
+	name: [%=service.metadata.name%]
+spec:
+	selector:
+		app: [%=service.serviceSelector.app%]
+	[%if (service.servicePorts.size() != 0){%]
+	ports:
+	[%for (port in service.servicePorts){%]
+	- protocol: TCP
+	  port: [%=port.port%]
+	  targetPort: [%=port.targetPort%]
+	[%}%]
+	[%}%]
+[%}%]

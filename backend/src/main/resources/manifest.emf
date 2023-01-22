@@ -1,0 +1,80 @@
+@namespace(uri="manifest",prefix="")
+package manifest;
+
+class Manifest {
+	val Deployment[*] deployments;
+	val Service[*] services;
+}
+
+class Deployment {
+	attr String[1] apiVersion;
+	attr String[1] replicas;
+	val Metadata[1] metadata;
+	val DeploymentSelector[1] deploymentSelector;
+	val DeploymentTemplate[1]	deploymentTemplate;
+}
+
+class DeploymentSelector {
+	val MatchLabel[1] matchLabels;
+}
+
+class MatchLabel {
+	attr String[1] app;
+}
+
+class DeploymentTemplate {
+	val Metadata[1] metadata;
+	val TemplateSpec[1] templateSpec;
+}
+
+class Metadata {
+	attr String[1] name;
+	val Label[1] labels;
+}
+
+class Label {
+	attr String[1] app;
+}
+
+class TemplateSpec {
+	val Container[1] container;
+}
+
+class Container {
+	attr String[1] name;
+	attr String[1] image;
+	val DeploymentPort[*] ports;
+	val Env[*] envs;
+	val VolumeMount[*] volumeMounts;
+}
+
+class DeploymentPort {
+	attr String[1] containerPort;
+}
+
+class Env {
+	attr String[1] name;
+	attr String[1] value;
+}
+
+class VolumeMount {
+	attr String[1] name;
+	attr String[1] mountPath;
+}
+
+class Service {
+	attr String[1] apiVersion;
+	attr String[1] kind;
+	val Metadata[1] metadata;
+	val ServiceSelector[1] serviceSelector;
+	val ServicePort[*] servicePorts;
+}
+
+class ServiceSelector {
+	attr String[1] app;
+}
+
+class ServicePort {
+	attr String[1] port;
+	attr String[1] targetPort;
+}
