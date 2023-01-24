@@ -1,11 +1,23 @@
 version: "3.9"
 services:
-  model:
-    build: .
-    image: sato2000/compose2kubernetes:latest
+  epsilon-model:
+    build: ./epsilon-backend
+    image: sato2000/compose2kubernetes-backend:1.0.0
     ports:
       - "8080:8080"
     networks:
       - mde_net
+  discord-bot:
+    build: ./discord-bot
+    image: sato2000/compose2kubernetes-discord:1.0.0
+    ports:
+      - "3000:3000"
+    environment:
+      - BOT_TOKEN
+      - BOT_ID
+      - DB_URL
+      - API_URL
+    networks:
+      - mde_net 
 networks:
   mde_net:
