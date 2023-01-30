@@ -2,14 +2,14 @@ version: "3.9"
 services:
   epsilon-model:
     build: ./epsilon-backend
-    image: sato2000/compose2kubernetes-backend:1.0.0
+    image: ghcr.io/douida-othmane/compose2kubernetes-backend:1.0.0
     ports:
       - "8080:8080"
     networks:
       - mde_net
   discord-bot:
     build: ./discord-bot
-    image: sato2000/compose2kubernetes-discord:1.0.0
+    image: ghcr.io/douida-othmane/compose2kubernetes-discord:1.0.0
     ports:
       - "3000:3000"
     environment:
