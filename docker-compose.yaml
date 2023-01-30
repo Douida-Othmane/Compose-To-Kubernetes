@@ -19,5 +19,7 @@ services:
       - API_URL
     networks:
       - mde_net 
+    depends_on:
+      - epsilon-model
 networks:
   mde_net:
